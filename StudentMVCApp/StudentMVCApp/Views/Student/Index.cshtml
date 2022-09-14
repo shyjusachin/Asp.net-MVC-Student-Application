@@ -1,0 +1,64 @@
+﻿@model StudentMVCApp.Models.Student
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<h1>Hello students</h1>
+
+
+@using (Html.BeginForm("Save", "Student", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.LabelFor(m => m.Name)
+    @Html.TextBoxFor(m => m.Name)
+    @Html.ValidationMessageFor(m=>m.Name)
+    <br />
+
+    @Html.LabelFor(m => m.Id)
+    @Html.TextBoxFor(m => m.Id)
+    <br />
+
+    @Html.LabelFor(m => m.Address)
+    @Html.TextAreaFor(m => m.Address)
+    @Html.ValidationMessageFor(m=>m.Address)
+    <input type="submit" value="Create" />
+    <input type="button" value="Save" id="btnSave" />
+    <input type="button" value="Update" id="btnUpdate" />
+    <input type="button" value="delete" id="btnDelete" />
+
+}
+<p1 id="idSuccess" style="color:green"></p1>
+
+<script type="text/javascript">
+
+    //Ajax call
+    $('#btnSave').click(function () {
+        let name = $('#Name').val();
+
+        $.ajax({
+            type: "POST",
+            url: "Student/Save",
+            data: { "name": name, "id": "105" },
+            success: function (data) {
+                //alert(data);
+                $('#idSuccess').text(data)
+                $('#Name').val(data.Name);
+
+            }
+        })
+    });
+
+</script>
+
+
+
+
+
+@*<p>Courses</p>
+    <ul>
+        @foreach (var course in Model.Courses)
+        {
+            <li>@course</li>
+
+        }
+    </ul>*@
+
+
